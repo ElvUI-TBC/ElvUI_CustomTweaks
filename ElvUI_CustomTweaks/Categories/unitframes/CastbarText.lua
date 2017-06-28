@@ -103,7 +103,6 @@ local anchorValues = {
 }
 local PositionCastbarText
 local SetCastbarTextColor
-local MAX_BOSS_FRAMES = MAX_BOSS_FRAMES
 
 local function ConfigTable()
 	E.Options.args.CustomTweaks.args.Unitframe.args.options.args.CastbarText = {
@@ -114,7 +113,7 @@ local function ConfigTable()
 		childGroups = "tab",
 		args = {},
 	}
-	
+
 	local function CreateOptionsGroup(order, name, unit)
 		local group = {
 			order = order,
@@ -218,7 +217,7 @@ local function ConfigTable()
 
 		return group
 	end
-	
+
 	local options = E.Options.args.CustomTweaks.args.Unitframe.args.options.args.CastbarText.args
 	options.player = CreateOptionsGroup(1, L["Player"], "Player")
 	options.pet = CreateOptionsGroup(2, L["Pet"], "Pet")
@@ -237,12 +236,12 @@ function PositionCastbarText(unit)
 	local pointDuration = E.db.CustomTweaks.CastbarText[unit].duration.point
 	local xOffsetDuration = E.db.CustomTweaks.CastbarText[unit].duration.xOffset
 	local yOffsetDuration =	E.db.CustomTweaks.CastbarText[unit].duration.yOffset
-	
+
 	if unit == "Arena" then
 		for i = 1, 5 do
 			local unitframe = _G["ElvUF_Arena"..1]
 			local castbar = unitframe and unitframe.Castbar
-			
+
 			if castbar then
 				castbar.Text:ClearAllPoints()
 				castbar.Text:SetPoint(pointText, castbar, pointText, xOffsetText, yOffsetText)
@@ -251,10 +250,10 @@ function PositionCastbarText(unit)
 			end
 		end
 	elseif unit == "Boss" then
-		for i = 1, MAX_BOSS_FRAMES do
+		for i = 1, 4 do
 			local unitframe = _G["ElvUF_Boss"..1]
 			local castbar = unitframe and unitframe.Castbar
-			
+
 			if castbar then
 				castbar.Text:ClearAllPoints()
 				castbar.Text:SetPoint(pointText, castbar, pointText, xOffsetText, yOffsetText)
@@ -265,7 +264,7 @@ function PositionCastbarText(unit)
 	else
 		local unitframe = _G["ElvUF_"..unit]
 		local castbar = unitframe and unitframe.Castbar
-		
+
 		if castbar then
 			castbar.Text:ClearAllPoints()
 			castbar.Text:SetPoint(pointText, castbar, pointText, xOffsetText, yOffsetText)
@@ -278,22 +277,22 @@ end
 function SetCastbarTextColor(unit)
 	local durationColor = E.db.CustomTweaks.CastbarText[unit].duration.color
 	local textColor = E.db.CustomTweaks.CastbarText[unit].text.color
-	
+
 	if unit == "Arena" then
 		for i = 1, 5 do
 			local unitframe = _G["ElvUF_Arena"..i]
 			local castbar = unitframe and unitframe.Castbar
-			
+
 			if castbar then
 				castbar.Text:SetTextColor(textColor.r, textColor.g, textColor.b, textColor.a)
 				castbar.Time:SetTextColor(durationColor.r, durationColor.g, durationColor.b, durationColor.a)
 			end
 		end
 	elseif unit == "Boss" then
-		for i = 1, MAX_BOSS_FRAMES do
+		for i = 1, 4 do
 			local unitframe = _G["ElvUF_Boss"..i]
 			local castbar = unitframe and unitframe.Castbar
-			
+
 			if castbar then
 				castbar.Text:SetTextColor(textColor.r, textColor.g, textColor.b, textColor.a)
 				castbar.Time:SetTextColor(durationColor.r, durationColor.g, durationColor.b, durationColor.a)

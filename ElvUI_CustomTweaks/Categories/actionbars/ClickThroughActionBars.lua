@@ -19,7 +19,6 @@ P["CustomTweaks"]["ClickThroughActionBars"] = {
 	["bar3"] = false,
 	["bar4"] = false,
 	["bar5"] = false,
-	["bar6"] = false,
 	["bar7"] = false,
 	["bar8"] = false,
 	["bar9"] = false,
@@ -52,7 +51,7 @@ local function ConfigTable()
 		},
 	}
 
-	local numBars = 6
+	local numBars = 5
 	if IsAddOnLoaded("ElvUI_ExtraActionBars") then
 		numBars = 10
 	end
@@ -85,7 +84,7 @@ end
 
 local function PositionAndSizeBarShapeShift(self)
 	ElvUI_StanceBar:EnableMouse(not E.db.CustomTweaks.ClickThroughActionBars.stanceBar)
-	
+
 	local button
 	for i=1, NUM_SHAPESHIFT_SLOTS do
 		button = _G["ElvUI_StanceBarButton"..i];
@@ -95,7 +94,7 @@ end
 
 local function PositionAndSizeBarPet(self)
 	ElvUI_BarPet:EnableMouse(not E.db.CustomTweaks.ClickThroughActionBars.barPet)
-	
+
 	local button
 	for i=1, NUM_PET_ACTION_SLOTS do
 		button = _G["PetActionButton"..i];

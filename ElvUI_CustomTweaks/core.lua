@@ -1,7 +1,7 @@
 local E, L, V, P, G = unpack(ElvUI);
 local CT = E:NewModule("CustomTweaks", "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0");
 local EP = LibStub("LibElvUIPlugin-1.0")
-local addon, ns = ...
+local addon = "ElvUI_CustomTweaks"
 
 --Cache global variables
 local pairs, ipairs = pairs, ipairs
@@ -17,15 +17,15 @@ V["CustomTweaks"] = {}
 
 local Tweaks = {
 	["Actionbar"] = {
-		{"PushedColor", L["Allows you to choose the color of the actionbar button when it is pushed down."]}, 
+		{"PushedColor", L["Allows you to choose the color of the actionbar button when it is pushed down."]},
 		{"ClickThroughActionBars", L["Allows you to make actionbars clickthrough."]},
 	},
 	["Bags"] = {
 		{"BagButtons", L["Allows you to change bag buttons to use the classic texture style and allows you to add a 'Stack' button."]},
 	},
-	["Chat"] = {
-		{"ChatMaxLines", L["Increases the amount of messages saved in a chat window, before they get replaced by new messages."]},
-	},
+	-- ["Chat"] = {
+	-- 	{"ChatMaxLines", L["Increases the amount of messages saved in a chat window, before they get replaced by new messages."]},
+	-- },
 	["Datatexts"] = {
 		{"BagsTextFormat", L["Allows you to choose which text format the Bags datatext uses."]},
 	},
@@ -76,11 +76,11 @@ local function GetTweaksAsString(tweaks)
 		tinsert(temp, tweak)
 	end
 	tsort(temp)
-	
+
 	for _, tweak in ipairs(temp) do
 		tweaksString = tweaksString..tweak..linebreak
 	end
-	
+
 	return tweaksString
 end
 
@@ -95,13 +95,13 @@ end
 function CT:ColorStr(str, r, g, b)
 	local hex
 	local coloredString
-	
+
 	if r and g and b then
 		hex = RGBToHex(r, g, b)
 	else
 		hex = RGBToHex(75/255, 235/255, 44/255)
 	end
-	
+
 	coloredString = "|cff"..hex..str.."|r"
 	return coloredString
 end
@@ -155,7 +155,7 @@ function CT:ConfigTable()
 				order = 1,
 				type = "header",
 				name = format(L["%s version %s by Blazeflack of tukui.org"], CT.Title, CT:ColorStr(CT.Version)),
-			},		
+			},
 			description1 = {
 				order = 2,
 				type = "description",
@@ -240,7 +240,7 @@ function CT:ConfigTable()
 			}
 		end
 	end
-	
+
 	for _, func in pairs(CT.Configs) do func() end
 end
 

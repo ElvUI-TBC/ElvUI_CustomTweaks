@@ -6,7 +6,6 @@ local isEnabled = E.private["unitframe"].enable and E.private["CustomTweaks"] an
 local _G = _G
 local pairs = pairs
 local hooksecurefunc = hooksecurefunc
-local MAX_BOSS_FRAMES = MAX_BOSS_FRAMES
 
 P["CustomTweaks"]["CastbarCustomBackdrop"] = {
 	["backdropColor"] = {r = 0.16, g = 0.16, b = 0.16, a = 1},
@@ -78,10 +77,10 @@ end
 
 local function PostCastInterruptible(self, unit)
 	if unit == "vehicle" or unit == "player" then return end
-	
+
 	local color = E.db.CustomTweaks.CastbarCustomBackdrop.backdropColor
 	local r, g, b, a = color.r, color.g, color.b, color.a
-	
+
 	if self.bg and self.bg:IsShown() then
 		self.bg:SetTexture(r, g, b)
 	else
@@ -115,12 +114,12 @@ f:SetScript("OnEvent", function(self)
 		end
 	end
 
-	for i = 1, MAX_BOSS_FRAMES do
-		local castbar = _G["ElvUF_Boss"..i].Castbar
-		if castbar then
-			hooksecurefunc(castbar, "PostCastStart", PostCastStart)
-			hooksecurefunc(castbar, "PostCastInterruptible", PostCastInterruptible)
-			hooksecurefunc(castbar, "PostChannelStart", PostChannelStart)
-		end
-	end
+	-- for i = 1, 4 do
+	-- 	local castbar = _G["ElvUF_Boss"..i].Castbar
+	-- 	if castbar then
+	-- 		hooksecurefunc(castbar, "PostCastStart", PostCastStart)
+	-- 		hooksecurefunc(castbar, "PostCastInterruptible", PostCastInterruptible)
+	-- 		hooksecurefunc(castbar, "PostChannelStart", PostChannelStart)
+	-- 	end
+	-- end
 end)
