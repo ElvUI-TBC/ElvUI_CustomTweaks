@@ -75,21 +75,6 @@ local function PostChannelStart(self, unit, name, castid)
 	end
 end
 
-local function PostCastInterruptible(self, unit)
-	if unit == "vehicle" or unit == "player" then return end
-
-	local color = E.db.CustomTweaks.CastbarCustomBackdrop.backdropColor
-	local r, g, b, a = color.r, color.g, color.b, color.a
-
-	if self.bg and self.bg:IsShown() then
-		self.bg:SetTexture(r, g, b)
-	else
-		if self.backdrop then
-			self.backdrop:SetBackdropColor(r, g, b, a)
-		end
-	end
-end
-
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_ENTERING_WORLD")
 f:SetScript("OnEvent", function(self)
@@ -100,7 +85,6 @@ f:SetScript("OnEvent", function(self)
 		local castbar = unitframe and unitframe.Castbar
 		if castbar then
 			hooksecurefunc(castbar, "PostCastStart", PostCastStart)
-			hooksecurefunc(castbar, "PostCastInterruptible", PostCastInterruptible)
 			hooksecurefunc(castbar, "PostChannelStart", PostChannelStart)
 		end
 	end
@@ -109,17 +93,7 @@ f:SetScript("OnEvent", function(self)
 		local castbar = _G["ElvUF_Arena"..i].Castbar
 		if castbar then
 			hooksecurefunc(castbar, "PostCastStart", PostCastStart)
-			hooksecurefunc(castbar, "PostCastInterruptible", PostCastInterruptible)
 			hooksecurefunc(castbar, "PostChannelStart", PostChannelStart)
 		end
 	end
-
-	-- for i = 1, 4 do
-	-- 	local castbar = _G["ElvUF_Boss"..i].Castbar
-	-- 	if castbar then
-	-- 		hooksecurefunc(castbar, "PostCastStart", PostCastStart)
-	-- 		hooksecurefunc(castbar, "PostCastInterruptible", PostCastInterruptible)
-	-- 		hooksecurefunc(castbar, "PostChannelStart", PostChannelStart)
-	-- 	end
-	-- end
 end)
