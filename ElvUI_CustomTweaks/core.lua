@@ -33,7 +33,6 @@ local Tweaks = {
 		{"MinimapSizeLimits", L["Lowers the minimum allowed minimap size."]},
 	},
 	["Misc"] = {
-		{"RaidControl", L["Allows you to change template of the Raid Control button or hide it altogether."]},
 		{"NoBorders", L["Attempts to remove borders on all ElvUI elements. This doesn't work on all statusbars, so some borders will be kept intact."]},
 	},
 	["Unitframe"] = {
@@ -63,7 +62,6 @@ local Authors = {
 		"MinimapSizeLimits",
 		"NoBorders",
 		"PushedColor",
-		"RaidControl",
 		"UnitFrameSpacingLimits",
 		"CastbarFont",
 	}},
