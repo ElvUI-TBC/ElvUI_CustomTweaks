@@ -3,7 +3,6 @@ local B = E:GetModule("Bags")
 local CT = E:GetModule("CustomTweaks")
 local isEnabled = E.private["bags"].enable and E.private["CustomTweaks"] and E.private["CustomTweaks"]["BagButtons"] and true or false
 
---Cache global variables
 local _G = _G
 local unpack = unpack
 
@@ -12,10 +11,6 @@ local GetNumBankSlots = GetNumBankSlots
 local ToggleFrame = ToggleFrame
 local IsShiftKeyDown = IsShiftKeyDown
 
----
--- GLOBALS: BagItemAutoSortButton, BankFrame
----
-
 P["CustomTweaks"]["BagButtons"] = {
 	["stackButton"] = false,
 	["style"] = "ICON",
@@ -23,9 +18,10 @@ P["CustomTweaks"]["BagButtons"] = {
 }
 
 local function ConfigTable()
-	E.Options.args.CustomTweaks.args.Bags.args.options.args.BagButtons = {
+	E.Options.args.elvuiPlugins.args.CustomTweaks.args.Bags.args.BagButtons = {
 		type = "group",
 		name = "BagButtons",
+		childGroups = "tab",
 		get = function(info) return E.db.CustomTweaks["BagButtons"][info[#info]] end,
 		set = function(info, value) E.db.CustomTweaks["BagButtons"][info[#info]] = value; CT:SetBagButtonStylePosition(); CT:SetBagButtonStylePosition(true); end,
 		args = {
@@ -68,13 +64,13 @@ local function ConfigTable()
 	}
 end
 CT.Configs["BagButtons"] = ConfigTable
-if not isEnabled then return; end
+if not isEnabled then return end
 
 local function CreateContainerButtons(self, name, isBank)
 	local f = _G[name]
 	local buttonColor = E:GetColorTable(E.db.CustomTweaks.BagButtons.buttonColor)
 
-	if (isBank) then
+	if isBank then
 		--Sort/Clean Up Button
 		f.sortButtonOld = CreateFrame("Button", name..'SortButtonOld', f);
 		f.sortButtonOld:Point('TOP', f, 'TOP', 29, -4)
@@ -127,10 +123,10 @@ local function CreateContainerButtons(self, name, isBank)
 		f.stackButton:SetSize(16 + E.Border, 16 + E.Border)
 		f.stackButton:SetTemplate()
 		f.stackButton:SetPoint("RIGHT", f.bagText, "LEFT", -5, E.Border * 2)
-		f.stackButton:SetNormalTexture("Interface\\AddOns\\ElvUI\\media\\textures\\INV_Pet_RatCage")
+		f.stackButton:SetNormalTexture("Interface\\AddOns\\ElvUI_CustomTweaks\\Media\\Textures\\INV_Pet_RatCage")
 		f.stackButton:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
 		f.stackButton:GetNormalTexture():SetInside()
-		f.stackButton:SetPushedTexture("Interface\\AddOns\\ElvUI\\media\\textures\\INV_Pet_RatCage")
+		f.stackButton:SetPushedTexture("Interface\\AddOns\\ElvUI_CustomTweaks\\Media\\Textures\\INV_Pet_RatCage")
 		f.stackButton:GetPushedTexture():SetTexCoord(unpack(E.TexCoords))
 		f.stackButton:GetPushedTexture():SetInside()
 		f.stackButton:StyleButton(nil, true)
@@ -193,10 +189,10 @@ local function CreateContainerButtons(self, name, isBank)
 		f.stackButton:SetSize(16 + E.Border, 16 + E.Border)
 		f.stackButton:SetTemplate()
 		f.stackButton:SetPoint("RIGHT", f.goldText, "LEFT", -5, E.Border * 2)
-		f.stackButton:SetNormalTexture("Interface\\AddOns\\ElvUI\\media\\textures\\INV_Pet_RatCage")
+		f.stackButton:SetNormalTexture("Interface\\AddOns\\ElvUI_CustomTweaks\\Media\\Textures\\INV_Pet_RatCage")
 		f.stackButton:GetNormalTexture():SetTexCoord(unpack(E.TexCoords))
 		f.stackButton:GetNormalTexture():SetInside()
-		f.stackButton:SetPushedTexture("Interface\\AddOns\\ElvUI\\media\\textures\\INV_Pet_RatCage")
+		f.stackButton:SetPushedTexture("Interface\\AddOns\\ElvUI_CustomTweaks\\Media\\Textures\\INV_Pet_RatCage")
 		f.stackButton:GetPushedTexture():SetTexCoord(unpack(E.TexCoords))
 		f.stackButton:GetPushedTexture():SetInside()
 		f.stackButton:StyleButton(nil, true)

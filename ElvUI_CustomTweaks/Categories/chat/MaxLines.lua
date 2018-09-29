@@ -3,13 +3,8 @@ local CH = E:GetModule("Chat")
 local CT = E:GetModule("CustomTweaks")
 local isEnabled = E.private["chat"].enable and E.private["CustomTweaks"] and E.private["CustomTweaks"]["ChatMaxLines"] and true or false
 
---Cache global variables
 local _G = _G
 local pairs = pairs
-
----
--- GLOBALS: CHAT_FRAMES
----
 
 P["CustomTweaks"]["ChatMaxLines"] = {
 	["MaxLines"] = 128,
@@ -17,7 +12,7 @@ P["CustomTweaks"]["ChatMaxLines"] = {
 
 local UpdateMaxLines
 local function ConfigTable()
-	E.Options.args.CustomTweaks.args.Chat.args.options.args.ChatMaxLines = {
+	E.Options.args.elvuiPlugins.args.CustomTweaks.args.Chat.args.ChatMaxLines = {
 		type = "group",
 		name = "ChatMaxLines",
 		get = function(info) return E.db.CustomTweaks.ChatMaxLines[info[#info]] end,

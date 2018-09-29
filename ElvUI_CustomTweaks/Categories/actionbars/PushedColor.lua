@@ -3,11 +3,10 @@ local AB = E:GetModule("ActionBars")
 local CT = E:GetModule("CustomTweaks")
 local isEnabled = E.private["actionbar"].enable and E.private["CustomTweaks"] and E.private["CustomTweaks"]["PushedColor"] and true or false
 
---Cache global variables
 local pairs = pairs
 
 P["CustomTweaks"]["PushedColor"] = {
-	["Color"] = {r = 1, g = 0, b = 0, a = 0.3},
+	["Color"] = {r = 1, g = 0, b = 0, a = 0.3}
 }
 
 local function UpdateBars()
@@ -19,9 +18,10 @@ local function UpdateBars()
 end
 
 local function ConfigTable()
-	E.Options.args.CustomTweaks.args.Actionbar.args.options.args.PushedColor = {
+	E.Options.args.elvuiPlugins.args.CustomTweaks.args.ActionBars.args.PushedColor = {
 		type = "group",
 		name = "PushedColor",
+		childGroups = "tab",
 		args = {
 			color = {
 				order = 1,
@@ -39,9 +39,9 @@ local function ConfigTable()
 					local t = E.db.CustomTweaks.PushedColor.Color
 					t.r, t.g, t.b, t.a = r, g, b, a
 					UpdateBars()
-				end,
-			},
-		},
+				end
+			}
+		}
 	}
 end
 CT.Configs["PushedColor"] = ConfigTable

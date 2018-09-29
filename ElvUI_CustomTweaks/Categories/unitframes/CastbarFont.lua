@@ -4,7 +4,6 @@ local isEnabled = E.private["unitframe"].enable and E.private["CustomTweaks"] an
 local UF = E:GetModule("UnitFrames")
 local LSM = LibStub("LibSharedMedia-3.0")
 
---Cache global variables
 local _G = _G
 local pairs = pairs
 
@@ -13,75 +12,75 @@ P["CustomTweaks"]["CastbarFont"] = {
 		["duration"] = {
 			["font"] = "Homespun",
 			["fontSize"] = 10,
-			["fontOutline"] = "MONOCHROMEOUTLINE",
+			["fontOutline"] = "MONOCHROMEOUTLINE"
 		},
 		["text"] = {
 			["font"] = "Homespun",
 			["fontSize"] = 10,
-			["fontOutline"] = "MONOCHROMEOUTLINE",
-		},
+			["fontOutline"] = "MONOCHROMEOUTLINE"
+		}
 	},
 	["Pet"] = {
 		["duration"] = {
 			["font"] = "Homespun",
 			["fontSize"] = 10,
-			["fontOutline"] = "MONOCHROMEOUTLINE",
+			["fontOutline"] = "MONOCHROMEOUTLINE"
 		},
 		["text"] = {
 			["font"] = "Homespun",
 			["fontSize"] = 10,
-			["fontOutline"] = "MONOCHROMEOUTLINE",
-		},
+			["fontOutline"] = "MONOCHROMEOUTLINE"
+		}
 	},
 	["Target"] = {
 		["duration"] = {
 			["font"] = "Homespun",
 			["fontSize"] = 10,
-			["fontOutline"] = "MONOCHROMEOUTLINE",
+			["fontOutline"] = "MONOCHROMEOUTLINE"
 		},
 		["text"] = {
 			["font"] = "Homespun",
 			["fontSize"] = 10,
-			["fontOutline"] = "MONOCHROMEOUTLINE",
-		},
+			["fontOutline"] = "MONOCHROMEOUTLINE"
+		}
 	},
 	["Focus"] = {
 		["duration"] = {
 			["font"] = "Homespun",
 			["fontSize"] = 10,
-			["fontOutline"] = "MONOCHROMEOUTLINE",
+			["fontOutline"] = "MONOCHROMEOUTLINE"
 		},
 		["text"] = {
 			["font"] = "Homespun",
 			["fontSize"] = 10,
-			["fontOutline"] = "MONOCHROMEOUTLINE",
-		},
+			["fontOutline"] = "MONOCHROMEOUTLINE"
+		}
 	},
 	["Arena"] = {
 		["duration"] = {
 			["font"] = "Homespun",
 			["fontSize"] = 10,
-			["fontOutline"] = "MONOCHROMEOUTLINE",
+			["fontOutline"] = "MONOCHROMEOUTLINE"
 		},
 		["text"] = {
 			["font"] = "Homespun",
 			["fontSize"] = 10,
-			["fontOutline"] = "MONOCHROMEOUTLINE",
-		},
-	},
+			["fontOutline"] = "MONOCHROMEOUTLINE"
+		}
+	}
 }
 
 local units = {"Player", "Pet", "Target", "Focus", "Arena"}
 local UpdateCastbarFont
 
 local function ConfigTable()
-	E.Options.args.CustomTweaks.args.Unitframe.args.options.args.CastbarFont = {
+	E.Options.args.elvuiPlugins.args.CustomTweaks.args.Unitframe.args.CastbarFont = {
 		type = "group",
 		name = "CastbarFont",
 		get = function(info) return E.db.CustomTweaks.CastbarFont[info[#info]] end,
 		set = function(info, value) E.db.CustomTweaks.CastbarFont[info[#info]] = value; end,
 		childGroups = "tab",
-		args = {},
+		args = {}
 	}
 
 	local function CreateOptionsGroup(order, name, unit)
@@ -104,28 +103,27 @@ local function ConfigTable()
 							type = "select",
 							dialogControl = "LSM30_Font",
 							name = L["Font"],
-							values = AceGUIWidgetLSMlists.font,
+							values = AceGUIWidgetLSMlists.font
 						},
 						fontSize = {
 							order = 2,
 							type = "range",
-							name = L["Font Size"],
-							min = 4, max = 22, step = 1,
+							name = FONT_SIZE,
+							min = 4, max = 22, step = 1
 						},
 						fontOutline = {
 							order = 3,
 							type = "select",
 							name = L["Font Outline"],
 							values = {
-								["NONE"] = L["None"],
+								["NONE"] = NONE,
 								["OUTLINE"] = "OUTLINE",
 								["MONOCHROMEOUTLINE"] = "MONOCROMEOUTLINE",
-								["THICKOUTLINE"] = "THICKOUTLINE",
-							},
-						},
-					},
+								["THICKOUTLINE"] = "THICKOUTLINE"
+							}
+						}
+					}
 				},
-
 				duration = {
 					order = 1,
 					type = "group",
@@ -140,34 +138,34 @@ local function ConfigTable()
 							type = "select",
 							dialogControl = "LSM30_Font",
 							name = L["Font"],
-							values = AceGUIWidgetLSMlists.font,
+							values = AceGUIWidgetLSMlists.font
 						},
 						fontSize = {
 							order = 2,
 							type = "range",
-							name = L["Font Size"],
-							min = 4, max = 22, step = 1,
+							name = FONT_SIZE,
+							min = 4, max = 22, step = 1
 						},
 						fontOutline = {
 							order = 3,
 							type = "select",
 							name = L["Font Outline"],
 							values = {
-								["NONE"] = L["None"],
+								["NONE"] = NONE,
 								["OUTLINE"] = "OUTLINE",
 								["MONOCHROMEOUTLINE"] = "MONOCROMEOUTLINE",
-								["THICKOUTLINE"] = "THICKOUTLINE",
-							},
-						},
-					},
-				},
-			},
+								["THICKOUTLINE"] = "THICKOUTLINE"
+							}
+						}
+					}
+				}
+			}
 		}
 
 		return group
 	end
 
-	local options = E.Options.args.CustomTweaks.args.Unitframe.args.options.args.CastbarFont.args
+	local options = E.Options.args.elvuiPlugins.args.CustomTweaks.args.Unitframe.args.CastbarFont.args
 	options.player = CreateOptionsGroup(1, L["Player"], "Player")
 	options.pet = CreateOptionsGroup(2, L["Pet"], "Pet")
 	options.target = CreateOptionsGroup(3, L["Target"], "Target")

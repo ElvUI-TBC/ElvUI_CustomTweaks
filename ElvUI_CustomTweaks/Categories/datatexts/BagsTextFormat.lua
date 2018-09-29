@@ -18,7 +18,7 @@ P["CustomTweaks"]["BagsTextFormat"] = {
 }
 
 local function ConfigTable()
-	E.Options.args.CustomTweaks.args.Datatexts.args.options.args.BagsTextFormat = {
+	E.Options.args.elvuiPlugins.args.CustomTweaks.args.Datatexts.args.BagsTextFormat = {
 		type = "group",
 		name = "BagsTextFormat",
 		get = function(info) return E.db.CustomTweaks.BagsTextFormat[info[#info]] end,

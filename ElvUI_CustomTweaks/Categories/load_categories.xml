@@ -1,9 +1,9 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Include file="actionbars\load_tweaks.xml"/>
-	<Include file="bags\load_tweaks.xml"/>
-	<!-- <Include file="chat\load_tweaks.xml"/> -->
-	<Include file="datatexts\load_tweaks.xml"/>
-	<Include file="minimap\load_tweaks.xml"/>
-	<Include file="misc\load_tweaks.xml"/>
-	<Include file="unitframes\load_tweaks.xml"/>
+	<Include file="Actionbars\Load_Tweaks.xml"/>
+	<Include file="Bags\Load_Tweaks.xml"/>
+	<Include file="Chat\Load_Tweaks.xml"/>
+	<Include file="Datatexts\Load_Tweaks.xml"/>
+	<Include file="Minimap\Load_Tweaks.xml"/>
+	<Include file="Misc\Load_Tweaks.xml"/>
+	<Include file="Unitframes\Load_Tweaks.xml"/>
 </Ui>

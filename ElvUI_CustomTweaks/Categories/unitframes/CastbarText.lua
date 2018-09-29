@@ -2,7 +2,6 @@ local E, L, V, P, G = unpack(ElvUI)
 local CT = E:GetModule("CustomTweaks")
 local isEnabled = E.private["unitframe"].enable and E.private["CustomTweaks"] and E.private["CustomTweaks"]["CastbarText"]and true or false
 
---Cache global variables
 local _G = _G
 local pairs = pairs
 
@@ -12,88 +11,74 @@ P["CustomTweaks"]["CastbarText"] = {
 			["point"] = "RIGHT",
 			["xOffset"] = -4,
 			["yOffset"] = 0,
-			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1},
+			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1}
 		},
 		["text"] = {
 			["point"] = "LEFT",
 			["xOffset"] = 4,
 			["yOffset"] = 0,
-			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1},
-		},
+			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1}
+		}
 	},
 	["Pet"] = {
 		["duration"] = {
 			["point"] = "RIGHT",
 			["xOffset"] = -4,
 			["yOffset"] = 0,
-			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1},
+			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1}
 		},
 		["text"] = {
 			["point"] = "LEFT",
 			["xOffset"] = 4,
 			["yOffset"] = 0,
-			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1},
-		},
+			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1}
+		}
 	},
 	["Target"] = {
 		["duration"] = {
 			["point"] = "RIGHT",
 			["xOffset"] = -4,
 			["yOffset"] = 0,
-			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1},
+			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1}
 		},
 		["text"] = {
 			["point"] = "LEFT",
 			["xOffset"] = 4,
 			["yOffset"] = 0,
-			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1},
-		},
+			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1}
+		}
 	},
 	["Focus"] = {
 		["duration"] = {
 			["point"] = "RIGHT",
 			["xOffset"] = -4,
 			["yOffset"] = 0,
-			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1},
+			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1}
 		},
 		["text"] = {
 			["point"] = "LEFT",
 			["xOffset"] = 4,
 			["yOffset"] = 0,
-			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1},
-		},
+			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1}
+		}
 	},
 	["Arena"] = {
 		["duration"] = {
 			["point"] = "RIGHT",
 			["xOffset"] = -4,
 			["yOffset"] = 0,
-			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1},
+			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1}
 		},
 		["text"] = {
 			["point"] = "LEFT",
 			["xOffset"] = 4,
 			["yOffset"] = 0,
-			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1},
-		},
-	},
-	["Boss"] = {
-		["duration"] = {
-			["point"] = "RIGHT",
-			["xOffset"] = -4,
-			["yOffset"] = 0,
-			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1},
-		},
-		["text"] = {
-			["point"] = "LEFT",
-			["xOffset"] = 4,
-			["yOffset"] = 0,
-			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1},
-		},
-	},
+			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1}
+		}
+	}
 }
 
-local units = {"Player", "Pet", "Target", "Focus", "Arena", "Boss"}
+local units = {"Player", "Pet", "Target", "Focus", "Arena"}
 local anchorValues = {
 	["TOP"] = "TOP",
 	["BOTTOM"] = "BOTTOM",
@@ -105,13 +90,13 @@ local PositionCastbarText
 local SetCastbarTextColor
 
 local function ConfigTable()
-	E.Options.args.CustomTweaks.args.Unitframe.args.options.args.CastbarText = {
+	E.Options.args.elvuiPlugins.args.CustomTweaks.args.Unitframe.args.CastbarText = {
 		type = "group",
 		name = "CastbarText",
 		get = function(info) return E.db.CustomTweaks.CastbarText[info[#info]] end,
 		set = function(info, value) E.db.CustomTweaks.CastbarText[info[#info]] = value; end,
 		childGroups = "tab",
-		args = {},
+		args = {}
 	}
 
 	local function CreateOptionsGroup(order, name, unit)
@@ -132,7 +117,7 @@ local function ConfigTable()
 						color = {
 							order = 1,
 							type = "color",
-							name = L["Color"],
+							name = COLOR,
 							hasAlpha = true,
 							get = function(info)
 								local t = E.db.CustomTweaks.CastbarText[unit].duration.color
@@ -144,27 +129,27 @@ local function ConfigTable()
 								local t = E.db.CustomTweaks.CastbarText[unit].duration.color
 								t.r, t.g, t.b, t.a = r, g, b, a
 								SetCastbarTextColor(unit)
-							end,
+							end
 						},
 						point = {
 							order = 2,
 							type = "select",
 							name = L["Anchor Point"],
-							values = anchorValues,
+							values = anchorValues
 						},
 						xOffset = {
 							order = 3,
 							type = "range",
 							name = L["X-Offset"],
-							min = -50, max = 50, step = 1,
+							min = -50, max = 50, step = 1
 						},
 						yOffset = {
 							order = 4,
 							type = "range",
 							name = L["Y-Offset"],
-							min = -50, max = 50, step = 1,
-						},
-					},
+							min = -50, max = 50, step = 1
+						}
+					}
 				},
 				text = {
 					order = 2,
@@ -178,7 +163,7 @@ local function ConfigTable()
 						color = {
 							order = 1,
 							type = "color",
-							name = L["Color"],
+							name = COLOR,
 							hasAlpha = true,
 							get = function(info)
 								local t = E.db.CustomTweaks.CastbarText[unit].text.color
@@ -190,41 +175,40 @@ local function ConfigTable()
 								local t = E.db.CustomTweaks.CastbarText[unit].text.color
 								t.r, t.g, t.b, t.a = r, g, b, a
 								SetCastbarTextColor(unit)
-							end,
+							end
 						},
 						point = {
 							order = 2,
 							type = "select",
 							name = L["Anchor Point"],
-							values = anchorValues,
+							values = anchorValues
 						},
 						xOffset = {
 							order = 3,
 							type = "range",
 							name = L["X-Offset"],
-							min = -50, max = 50, step = 1,
+							min = -50, max = 50, step = 1
 						},
 						yOffset = {
 							order = 4,
 							type = "range",
 							name = L["Y-Offset"],
-							min = -50, max = 50, step = 1,
-						},
-					},
-				},
-			},
+							min = -50, max = 50, step = 1
+						}
+					}
+				}
+			}
 		}
 
 		return group
 	end
 
-	local options = E.Options.args.CustomTweaks.args.Unitframe.args.options.args.CastbarText.args
+	local options = E.Options.args.elvuiPlugins.args.CustomTweaks.args.Unitframe.args.CastbarText.args
 	options.player = CreateOptionsGroup(1, L["Player"], "Player")
 	options.pet = CreateOptionsGroup(2, L["Pet"], "Pet")
 	options.target = CreateOptionsGroup(3, L["Target"], "Target")
 	options.focus = CreateOptionsGroup(4, L["Focus"], "Focus")
 	options.arena = CreateOptionsGroup(5, L["Arena"], "Arena")
-	options.boss = CreateOptionsGroup(6, L["Boss"], "Boss")
 end
 CT.Configs["CastbarText"] = ConfigTable
 if not isEnabled then return; end
@@ -240,18 +224,6 @@ function PositionCastbarText(unit)
 	if unit == "Arena" then
 		for i = 1, 5 do
 			local unitframe = _G["ElvUF_Arena"..1]
-			local castbar = unitframe and unitframe.Castbar
-
-			if castbar then
-				castbar.Text:ClearAllPoints()
-				castbar.Text:SetPoint(pointText, castbar, pointText, xOffsetText, yOffsetText)
-				castbar.Time:ClearAllPoints()
-				castbar.Time:SetPoint(pointDuration, castbar, pointDuration, xOffsetDuration, yOffsetDuration)
-			end
-		end
-	elseif unit == "Boss" then
-		for i = 1, 4 do
-			local unitframe = _G["ElvUF_Boss"..1]
 			local castbar = unitframe and unitframe.Castbar
 
 			if castbar then
@@ -281,16 +253,6 @@ function SetCastbarTextColor(unit)
 	if unit == "Arena" then
 		for i = 1, 5 do
 			local unitframe = _G["ElvUF_Arena"..i]
-			local castbar = unitframe and unitframe.Castbar
-
-			if castbar then
-				castbar.Text:SetTextColor(textColor.r, textColor.g, textColor.b, textColor.a)
-				castbar.Time:SetTextColor(durationColor.r, durationColor.g, durationColor.b, durationColor.a)
-			end
-		end
-	elseif unit == "Boss" then
-		for i = 1, 4 do
-			local unitframe = _G["ElvUF_Boss"..i]
 			local castbar = unitframe and unitframe.Castbar
 
 			if castbar then

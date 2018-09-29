@@ -3,7 +3,6 @@ local UF = E:GetModule("UnitFrames")
 local CT = E:GetModule("CustomTweaks")
 local isEnabled = E.private["unitframe"].enable and E.private["CustomTweaks"] and E.private["CustomTweaks"]["AuraIconSpacing"] and true or false
 
---Cache global variables
 local _G = _G
 local pairs = pairs
 
@@ -21,58 +20,56 @@ P["CustomTweaks"]["AuraIconSpacing"] = {
 		["pet"] = true,
 		["pettarget"] = true,
 		["arena"] = true,
-		["boss"] = true,
 		["party"] = true,
 		["raid"] = true,
 		["raid40"] = true,
 		["raidpet"] = true,
 		["tank"] = true,
 		["assist"] = true,
-	},
+	}
 }
 
 local function ConfigTable()
-	E.Options.args.CustomTweaks.args.Unitframe.args.options.args.AuraIconSpacing = {
+	E.Options.args.elvuiPlugins.args.CustomTweaks.args.Unitframe.args.AuraIconSpacing = {
 		type = "group",
 		name = "AuraIconSpacing",
 		args = {
 			spacing = {
-				type = 'range',
 				order = 1,
+				type = "range",
 				name = L["Aura Spacing"],
 				desc = L["Sets space between individual aura icons."],
 				get = function(info) return E.db.CustomTweaks.AuraIconSpacing.spacing end,
 				set = function(info, value) E.db.CustomTweaks.AuraIconSpacing.spacing = value; UpdateAuraSettings(); end,
 				disabled = function() return not isEnabled end,
-				min = 0, max = 10, step = 1,
+				min = 0, max = 10, step = 1
 			},
 			units = {
-				type = "multiselect",
 				order = 2,
+				type = "multiselect",
 				name = L["Set Aura Spacing On Following Units"],
 				get = function(info, key) return E.db.CustomTweaks.AuraIconSpacing.units[key] end,
 				set = function(info, key, value) E.db.CustomTweaks.AuraIconSpacing.units[key] = value; UpdateAuraSettings(); end,
 				disabled = function() return not isEnabled end,
 				values = {
-					['player'] = L["Player"],
-					['target'] = L["Target"],
-					['targettarget'] = L["TargetTarget"],
-					['targettargettarget'] = L["TargetTargetTarget"],
-					['focus'] = L["Focus"],
-					['focustarget'] = L["FocusTarget"],
-					['pet'] = L["Pet"],
-					['pettarget'] = L["PetTarget"],
-					['arena'] = L["Arena"],
-					['boss'] = L["Boss"],
-					['party'] = L["Party"],
-					['raid'] = L["Raid"],
-					['raid40'] = L["Raid40"],
-					['raidpet'] = L["RaidPet"],
+					["player"] = L["Player"],
+					["target"] = L["Target"],
+					["targettarget"] = L["TargetTarget"],
+					["targettargettarget"] = L["TargetTargetTarget"],
+					["focus"] = L["Focus"],
+					["focustarget"] = L["FocusTarget"],
+					["pet"] = L["Pet"],
+					["pettarget"] = L["PetTarget"],
+					["arena"] = L["Arena"],
+					["party"] = L["Party"],
+					["raid"] = L["Raid"],
+					["raid40"] = L["Raid40"],
+					["raidpet"] = L["RaidPet"],
 					["tank"] = L["Tank"],
-					["assist"] = L["Assist"],
-				},
-			},
-		},
+					["assist"] = L["Assist"]
+				}
+			}
+		}
 	}
 end
 CT.Configs["AuraIconSpacing"] = ConfigTable
@@ -109,7 +106,7 @@ function UpdateAuraSettings()
 		local spacing = E.db.CustomTweaks.AuraIconSpacing.units[unitName] and auraSpacing or E.Spacing
 		local frameNameUnit = E:StringTitle(unitName)
 		frameNameUnit = frameNameUnit:gsub("t(arget)", "T%1")
-		
+
 		local unitframe = _G["ElvUF_"..frameNameUnit]
 		if unitframe then
 			SetAuraSpacingAndUpdate(unitframe, unitName, spacing)
@@ -120,13 +117,13 @@ function UpdateAuraSettings()
 		local spacing = E.db.CustomTweaks.AuraIconSpacing.units[unitgroup] and auraSpacing or E.Spacing
 		local frameNameUnit = E:StringTitle(unit)
 		frameNameUnit = frameNameUnit:gsub("t(arget)", "T%1")
-		
+
 		local unitframe = _G["ElvUF_"..frameNameUnit]
 		if unitframe then
 			SetAuraSpacingAndUpdate(unitframe, unitgroup, spacing)
 		end
 	end
-	
+
 	for _, header in pairs(UF.headers) do
 		local name = header.groupName
 		local spacing = E.db.CustomTweaks.AuraIconSpacing.units[name] and auraSpacing or E.Spacing
@@ -157,9 +154,9 @@ local function SetAuraWidth(self, frame, auraType)
 
 	local auras = frame[auraType]
 	auraType = auraType:lower()
-	
+
 	if db[auraType].sizeOverride and db[auraType].sizeOverride > 0 then
 		auras:SetWidth(db[auraType].perrow * db[auraType].sizeOverride + ((db[auraType].perrow - 1) * auras.spacing))
 	end
 end
-hooksecurefunc(UF, 'Configure_Auras', SetAuraWidth)
+hooksecurefunc(UF, "Configure_Auras", SetAuraWidth)

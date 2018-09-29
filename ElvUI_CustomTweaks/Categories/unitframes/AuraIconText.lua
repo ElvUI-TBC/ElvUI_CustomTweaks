@@ -3,7 +3,6 @@ local UF = E:GetModule("UnitFrames")
 local CT = E:GetModule("CustomTweaks")
 local isEnabled = E.private["unitframe"].enable and E.private["CustomTweaks"] and E.private["CustomTweaks"]["AuraIconText"] and true or false
 
---Cache global variables
 local CreateFrame = CreateFrame
 
 P["CustomTweaks"]["AuraIconText"] = {
@@ -21,7 +20,7 @@ P["CustomTweaks"]["AuraIconText"] = {
 }
 
 local function ConfigTable()
-	E.Options.args.CustomTweaks.args.Unitframe.args.options.args.AuraIconText = {
+	E.Options.args.elvuiPlugins.args.CustomTweaks.args.Unitframe.args.AuraIconText = {
 		type = "group",
 		name = "AuraIconText",
 		get = function(info) return E.db.CustomTweaks.AuraIconText[info[#info]] end,
@@ -38,15 +37,15 @@ local function ConfigTable()
 						type = "toggle",
 						name = L["Hide Text"],
 						set = function(info, value) E.db.CustomTweaks.AuraIconText.hideDurationText = value; end,
-						disabled = function() return not isEnabled end,
+						disabled = function() return not isEnabled end
 					},
 					durationFilterOwner = {
 						order = 2,
 						type = "toggle",
 						name = L["Hide From Others"],
 						desc = L["Will hide duration text on auras that are not cast by you."],
-						set = function(info, value) E.db.CustomTweaks.AuraIconText.durationFilterOwner = value; end,
-						disabled = function() return (not isEnabled or E.db.CustomTweaks.AuraIconText.hideDurationText) end,
+						set = function(info, value) E.db.CustomTweaks.AuraIconText.durationFilterOwner = value end,
+						disabled = function() return (not isEnabled or E.db.CustomTweaks.AuraIconText.hideDurationText) end
 					},
 					durationThreshold = {
 						order = 3,
@@ -55,7 +54,7 @@ local function ConfigTable()
 						desc = L["Duration text will be hidden until it reaches this threshold (in seconds). Set to -1 to always show duration text."],
 						set = function(info, value) E.db.CustomTweaks.AuraIconText.durationThreshold = value; end,
 						disabled = function() return (not isEnabled or E.db.CustomTweaks.AuraIconText.hideDurationText) end,
-						min = -1, max = 60, step = 1,
+						min = -1, max = 60, step = 1
 					},
 					durationTextPos = {
 						order = 4,
@@ -68,8 +67,8 @@ local function ConfigTable()
 							["BOTTOMRIGHT"] = L["Bottom Right"],
 							["TOPLEFT"] = L["Top Left"],
 							["TOPRIGHT"] = L["Top Right"],
-							["CENTER"] = L["Center"],
-						},
+							["CENTER"] = L["Center"]
+						}
 					},
 					durationTextOffsetX = {
 						order = 5,
@@ -77,7 +76,7 @@ local function ConfigTable()
 						name = L["X-Offset"],
 						desc = L["Horizontal offset of the duration text."],
 						disabled = function() return not isEnabled end,
-						min = -20, max = 20, step = 1,
+						min = -20, max = 20, step = 1
 					},
 					durationTextOffsetY = {
 						order = 6,
@@ -85,9 +84,9 @@ local function ConfigTable()
 						name = L["Y-Offset"],
 						desc = L["Vertical offset of the duration text."],
 						disabled = function() return not isEnabled end,
-						min = -20, max = 20, step = 1,
-					},
-				},
+						min = -20, max = 20, step = 1
+					}
+				}
 			},
 			stack = {
 				order = 2,
@@ -100,7 +99,7 @@ local function ConfigTable()
 						type = "toggle",
 						name = L["Hide Text"],
 						set = function(info, value) E.db.CustomTweaks.AuraIconText.hideStackText = value; end,
-						disabled = function() return not isEnabled end,
+						disabled = function() return not isEnabled end
 					},
 					stackFilterOwner = {
 						order = 2,
@@ -108,7 +107,7 @@ local function ConfigTable()
 						name = L["Hide From Others"],
 						desc = L["Will hide stack text on auras that are not cast by you."],
 						set = function(info, value) E.db.CustomTweaks.AuraIconText.stackFilterOwner = value; end,
-						disabled = function() return (not isEnabled or E.db.CustomTweaks.AuraIconText.hideStackText) end,
+						disabled = function() return (not isEnabled or E.db.CustomTweaks.AuraIconText.hideStackText) end
 					},
 					stackTextPos = {
 						order = 3,
@@ -121,13 +120,13 @@ local function ConfigTable()
 							["BOTTOMRIGHT"] = L["Bottom Right"],
 							["TOPLEFT"] = L["Top Left"],
 							["TOPRIGHT"] = L["Top Right"],
-							["CENTER"] = L["Center"],
-						},
+							["CENTER"] = L["Center"]
+						}
 					},
 					spacer = {
 						order = 4,
 						type = "description",
-						name = "",
+						name = ""
 					},
 					stackTextOffsetX = {
 						order = 5,
@@ -135,7 +134,7 @@ local function ConfigTable()
 						name = L["X-Offset"],
 						desc = L["Horizontal offset of the stack count."],
 						disabled = function() return not isEnabled end,
-						min = -20, max = 20, step = 1,
+						min = -20, max = 20, step = 1
 					},
 					stackTextOffsetY = {
 						order = 6,
@@ -143,33 +142,35 @@ local function ConfigTable()
 						name = L["Y-Offset"],
 						desc = L["Vertical offset of the stack count."],
 						disabled = function() return not isEnabled end,
-						min = -20, max = 20, step = 1,
-					},
-				},
-			},
-		},
+						min = -20, max = 20, step = 1
+					}
+				}
+			}
+		}
 	}
 end
 CT.Configs["AuraIconText"] = ConfigTable
-if not isEnabled then return; end
+if not isEnabled then return end
 
 local function UpdateAuraIconSettings(self, auras, noCycle)
 	local frame = auras:GetParent()
 	local type = auras.type
-	if(noCycle) then
+	if noCycle then
 		frame = auras:GetParent():GetParent()
 		type = auras:GetParent().type
 	end
-	if(not frame.db) then return end
+	if not frame.db then return end
 
 	local db = frame.db[type]
 	local index = 1
-	if(db) then
+	if db then
 		local config = E.db.CustomTweaks.AuraIconText
-		if(not noCycle) then
-			while(auras[index]) do
+		if not noCycle then
+			while auras[index] do
 				local button = auras[index]
+				button.text:ClearAllPoints()
 				button.text:Point(config.durationTextPos, config.durationTextOffsetX, config.durationTextOffsetY)
+				button.count:ClearAllPoints()
 				button.count:Point(config.stackTextPos, config.stackTextOffsetX, config.stackTextOffsetY)
 
 				if not button.helper then
@@ -184,7 +185,9 @@ local function UpdateAuraIconSettings(self, auras, noCycle)
 				index = index + 1
 			end
 		else
+			auras.text:ClearAllPoints()
 			auras.text:Point(config.durationTextPos, config.durationTextOffsetX, config.durationTextOffsetY)
+			auras.count:ClearAllPoints()
 			auras.count:Point(config.stackTextPos, config.stackTextOffsetX, config.stackTextOffsetY)
 
 			if not auras.helper then
@@ -245,7 +248,7 @@ local function ResetOnUpdate(unitframe)
 	if unitframe.Debuffs then
 		for i = 1, #unitframe.Debuffs do
 			local button = unitframe.Debuffs[i]
-			if(button and button:IsShown()) then
+			if button and button:IsShown() then
 				SetOnUpdate(button)
 			end
 		end

@@ -22,7 +22,7 @@ local BuildTable
 local powerbars = {}
 
 local function ConfigTable()
-	E.Options.args.CustomTweaks.args.Unitframe.args.options.args.PowerBarTexture = {
+	E.Options.args.elvuiPlugins.args.CustomTweaks.args.Unitframe.args.PowerBarTexture = {
 		type = "group",
 		name = "PowerBarTexture",
 		get = function(info) return E.db.CustomTweaks.PowerBarTexture[info[#info]] end,
