@@ -10,6 +10,7 @@ local CreateFrame = CreateFrame
 local GetNumBankSlots = GetNumBankSlots
 local ToggleFrame = ToggleFrame
 local IsShiftKeyDown = IsShiftKeyDown
+local BINDING_NAME_TOGGLEKEYRING = BINDING_NAME_TOGGLEKEYRING
 
 P["CustomTweaks"]["BagButtons"] = {
 	["stackButton"] = false,
@@ -23,7 +24,7 @@ local function ConfigTable()
 		name = "BagButtons",
 		childGroups = "tab",
 		get = function(info) return E.db.CustomTweaks["BagButtons"][info[#info]] end,
-		set = function(info, value) E.db.CustomTweaks["BagButtons"][info[#info]] = value; CT:SetBagButtonStylePosition(); CT:SetBagButtonStylePosition(true); end,
+		set = function(info, value) E.db.CustomTweaks["BagButtons"][info[#info]] = value CT:SetBagButtonStylePosition() CT:SetBagButtonStylePosition(true) end,
 		args = {
 			stackButton = {
 				order = 1,
@@ -72,23 +73,23 @@ local function CreateContainerButtons(self, name, isBank)
 
 	if isBank then
 		--Sort/Clean Up Button
-		f.sortButtonOld = CreateFrame("Button", name..'SortButtonOld', f);
-		f.sortButtonOld:Point('TOP', f, 'TOP', 29, -4)
+		f.sortButtonOld = CreateFrame("Button", name.."SortButtonOld", f)
+		f.sortButtonOld:Point("TOP", f, "TOP", 29, -4)
 		f.sortButtonOld:Size(55, 10)
-		f.sortButtonOld:SetTemplate('Default', true)
+		f.sortButtonOld:SetTemplate("Default", true)
 		f.sortButtonOld:SetBackdropColor(unpack(buttonColor))
-		f.sortButtonOld.ttText = L['Sort Bags']
+		f.sortButtonOld.ttText = L["Sort Bags"]
 		f.sortButtonOld:SetScript("OnEnter", B.Tooltip_Show)
 		f.sortButtonOld:SetScript("OnLeave", B.Tooltip_Hide)
-		f.sortButtonOld:SetScript('OnClick', function() B:CommandDecorator(B.SortBags, 'bank')(); end)
+		f.sortButtonOld:SetScript("OnClick", function() B:CommandDecorator(B.SortBags, "bank")() end)
 
 		--Purchase Bags Button
-		f.purchaseBagButtonOld = CreateFrame('Button', name..'PurchaseButtonOld', f.holderFrame)
-		f.purchaseBagButtonOld:Point('RIGHT', f.sortButtonOld, 'LEFT', -3, 0)
+		f.purchaseBagButtonOld = CreateFrame("Button", name.."PurchaseButtonOld", f.holderFrame)
+		f.purchaseBagButtonOld:Point("RIGHT", f.sortButtonOld, "LEFT", -3, 0)
 		f.purchaseBagButtonOld:Size(55, 10)
-		f.purchaseBagButtonOld:SetTemplate('Default', true)
+		f.purchaseBagButtonOld:SetTemplate("Default", true)
 		f.purchaseBagButtonOld:SetBackdropColor(unpack(buttonColor))
-		f.purchaseBagButtonOld.ttText = L['Purchase Bags']
+		f.purchaseBagButtonOld.ttText = L["Purchase Bags"]
 		f.purchaseBagButtonOld:SetScript("OnEnter", B.Tooltip_Show)
 		f.purchaseBagButtonOld:SetScript("OnLeave", B.Tooltip_Hide)
 		f.purchaseBagButtonOld:SetScript("OnClick", function()
@@ -101,15 +102,15 @@ local function CreateContainerButtons(self, name, isBank)
 		end)
 
 		--Toggle Bags Button
-		f.bagsButtonOld = CreateFrame("Button", name..'BagsButtonOld', f.holderFrame);
-		f.bagsButtonOld:Point('RIGHT', f.purchaseBagButtonOld, 'LEFT', -3, 0)
+		f.bagsButtonOld = CreateFrame("Button", name.."BagsButtonOld", f.holderFrame)
+		f.bagsButtonOld:Point("RIGHT", f.purchaseBagButtonOld, "LEFT", -3, 0)
 		f.bagsButtonOld:Size(55, 10)
-		f.bagsButtonOld:SetTemplate('Default', true)
+		f.bagsButtonOld:SetTemplate("Default", true)
 		f.bagsButtonOld:SetBackdropColor(unpack(buttonColor))
-		f.bagsButtonOld.ttText = L['Toggle Bags'];
+		f.bagsButtonOld.ttText = L["Toggle Bags"]
 		f.bagsButtonOld:SetScript("OnEnter", B.Tooltip_Show)
 		f.bagsButtonOld:SetScript("OnLeave", B.Tooltip_Hide)
-		f.bagsButtonOld:SetScript('OnClick', function()
+		f.bagsButtonOld:SetScript("OnClick", function()
 		local numSlots, full = GetNumBankSlots()
 			if numSlots >= 1 then
 				ToggleFrame(f.ContainerHolder)
@@ -119,7 +120,7 @@ local function CreateContainerButtons(self, name, isBank)
 		end)
 
 		--Stack/Transfer Button Icon
-		f.stackButton = CreateFrame("Button", name..'StackButton', f.holderFrame);
+		f.stackButton = CreateFrame("Button", name.."StackButton", f.holderFrame)
 		f.stackButton:SetSize(16 + E.Border, 16 + E.Border)
 		f.stackButton:SetTemplate()
 		f.stackButton:SetPoint("RIGHT", f.bagText, "LEFT", -5, E.Border * 2)
@@ -130,62 +131,62 @@ local function CreateContainerButtons(self, name, isBank)
 		f.stackButton:GetPushedTexture():SetTexCoord(unpack(E.TexCoords))
 		f.stackButton:GetPushedTexture():SetInside()
 		f.stackButton:StyleButton(nil, true)
-		f.stackButton.ttText = L['Stack Items In Bank']
-		f.stackButton.ttText2 = L['Hold Shift:']
-		f.stackButton.ttText2desc = L['Stack Items To Bags']
+		f.stackButton.ttText = L["Stack Items In Bank"]
+		f.stackButton.ttText2 = L["Hold Shift:"]
+		f.stackButton.ttText2desc = L["Stack Items To Bags"]
 		f.stackButton:SetScript("OnEnter", self.Tooltip_Show)
 		f.stackButton:SetScript("OnLeave", self.Tooltip_Hide)
-		f.stackButton:SetScript('OnClick', function()
+		f.stackButton:SetScript("OnClick", function()
 			if IsShiftKeyDown() then
-				B:CommandDecorator(B.Stack, 'bank bags')();
+				B:CommandDecorator(B.Stack, "bank bags")()
 			else
-				B:CommandDecorator(B.Compress, 'bank')();
+				B:CommandDecorator(B.Compress, "bank")()
 			end
 		end)
 
 		--Stack/Transfer Button
-		f.stackButtonOld = CreateFrame('Button', name..'StackButtonOld', f.holderFrame)
-		f.stackButtonOld:Point('LEFT', f.sortButtonOld, 'RIGHT', 3, 0)
+		f.stackButtonOld = CreateFrame("Button", name.."StackButtonOld", f.holderFrame)
+		f.stackButtonOld:Point("LEFT", f.sortButtonOld, "RIGHT", 3, 0)
 		f.stackButtonOld:Size(55, 10)
-		f.stackButtonOld:SetTemplate('Default', true)
+		f.stackButtonOld:SetTemplate("Default", true)
 		f.stackButtonOld:SetBackdropColor(unpack(buttonColor))
-		f.stackButtonOld.ttText = L['Stack Items In Bank']
-		f.stackButtonOld.ttText2 = L['Hold Shift:']
-		f.stackButtonOld.ttText2desc = L['Stack Items To Bags']
+		f.stackButtonOld.ttText = L["Stack Items In Bank"]
+		f.stackButtonOld.ttText2 = L["Hold Shift:"]
+		f.stackButtonOld.ttText2desc = L["Stack Items To Bags"]
 		f.stackButtonOld:SetScript("OnEnter", B.Tooltip_Show)
 		f.stackButtonOld:SetScript("OnLeave", B.Tooltip_Hide)
-		f.stackButtonOld:SetScript('OnClick', function()
+		f.stackButtonOld:SetScript("OnClick", function()
 			if IsShiftKeyDown() then
-				B:CommandDecorator(B.Stack, 'bank bags')();
+				B:CommandDecorator(B.Stack, "bank bags")()
 			else
-				B:CommandDecorator(B.Compress, 'bank')();
+				B:CommandDecorator(B.Compress, "bank")()
 			end
 		end)
 	else
 		--Vendor Button
-		f.vendorGraysButtonOld = CreateFrame('Button', nil, f)
-		f.vendorGraysButtonOld:Point('TOP', f, 'TOP', 0, -4)
+		f.vendorGraysButtonOld = CreateFrame("Button", nil, f)
+		f.vendorGraysButtonOld:Point("TOP", f, "TOP", 0, -4)
 		f.vendorGraysButtonOld:Size(55, 10)
-		f.vendorGraysButtonOld:SetTemplate('Default', true)
+		f.vendorGraysButtonOld:SetTemplate("Default", true)
 		f.vendorGraysButtonOld:SetBackdropColor(unpack(buttonColor))
-		f.vendorGraysButtonOld.ttText = L['Vendor Grays']
+		f.vendorGraysButtonOld.ttText = L["Vendor / Delete Grays"]
 		f.vendorGraysButtonOld:SetScript("OnEnter", B.Tooltip_Show)
 		f.vendorGraysButtonOld:SetScript("OnLeave", B.Tooltip_Hide)
-		f.vendorGraysButtonOld:SetScript('OnClick', function() B:VendorGrayCheck(); end)
+		f.vendorGraysButtonOld:SetScript("OnClick", function() B:VendorGrayCheck() end)
 
 		--Sort Button
-		f.sortButtonOld = CreateFrame('Button', nil, f)
-		f.sortButtonOld:Point('LEFT', f.vendorGraysButtonOld, 'RIGHT', 3, 0)
+		f.sortButtonOld = CreateFrame("Button", nil, f)
+		f.sortButtonOld:Point("LEFT", f.vendorGraysButtonOld, "RIGHT", 3, 0)
 		f.sortButtonOld:Size(55, 10)
-		f.sortButtonOld:SetTemplate('Default', true)
+		f.sortButtonOld:SetTemplate("Default", true)
 		f.sortButtonOld:SetBackdropColor(unpack(buttonColor))
-		f.sortButtonOld.ttText = L['Sort Bags']
+		f.sortButtonOld.ttText = L["Sort Bags"]
 		f.sortButtonOld:SetScript("OnEnter", B.Tooltip_Show)
 		f.sortButtonOld:SetScript("OnLeave", B.Tooltip_Hide)
-		f.sortButtonOld:SetScript('OnClick', function() B:CommandDecorator(B.SortBags, 'bags')(); end)
+		f.sortButtonOld:SetScript("OnClick", function() B:CommandDecorator(B.SortBags, "bags")() end)
 
 		--Stack/Transfer Button Icon
-		f.stackButton = CreateFrame("Button", name..'StackButton', f.holderFrame);
+		f.stackButton = CreateFrame("Button", name.."StackButton", f.holderFrame)
 		f.stackButton:SetSize(16 + E.Border, 16 + E.Border)
 		f.stackButton:SetTemplate()
 		f.stackButton:SetPoint("RIGHT", f.goldText, "LEFT", -5, E.Border * 2)
@@ -196,48 +197,59 @@ local function CreateContainerButtons(self, name, isBank)
 		f.stackButton:GetPushedTexture():SetTexCoord(unpack(E.TexCoords))
 		f.stackButton:GetPushedTexture():SetInside()
 		f.stackButton:StyleButton(nil, true)
-		f.stackButton.ttText = L['Stack Items In Bags']
-		f.stackButton.ttText2 = L['Hold Shift:']
-		f.stackButton.ttText2desc = L['Stack Items To Bank']
+		f.stackButton.ttText = L["Stack Items In Bags"]
+		f.stackButton.ttText2 = L["Hold Shift:"]
+		f.stackButton.ttText2desc = L["Stack Items To Bank"]
 		f.stackButton:SetScript("OnEnter", self.Tooltip_Show)
 		f.stackButton:SetScript("OnLeave", self.Tooltip_Hide)
-		f.stackButton:SetScript('OnClick', function()
+		f.stackButton:SetScript("OnClick", function()
 			if IsShiftKeyDown() then
-				B:CommandDecorator(B.Stack, 'bags bank')();
+				B:CommandDecorator(B.Stack, "bags bank")()
 			else
-				B:CommandDecorator(B.Compress, 'bags')();
+				B:CommandDecorator(B.Compress, "bags")()
 			end
 		end)
 
 		--Stack/Transfer Button
-		f.stackButtonOld = CreateFrame('Button', nil, f)
-		f.stackButtonOld:Point('LEFT', f.sortButtonOld, 'RIGHT', 3, 0)
+		f.stackButtonOld = CreateFrame("Button", nil, f)
+		f.stackButtonOld:Point("LEFT", f.sortButtonOld, "RIGHT", 3, 0)
 		f.stackButtonOld:Size(55, 10)
-		f.stackButtonOld:SetTemplate('Default', true)
+		f.stackButtonOld:SetTemplate("Default", true)
 		f.stackButtonOld:SetBackdropColor(unpack(buttonColor))
-		f.stackButtonOld.ttText = L['Stack Items In Bags']
-		f.stackButtonOld.ttText2 = L['Hold Shift:']
-		f.stackButtonOld.ttText2desc = L['Stack Items To Bank']
+		f.stackButtonOld.ttText = L["Stack Items In Bags"]
+		f.stackButtonOld.ttText2 = L["Hold Shift:"]
+		f.stackButtonOld.ttText2desc = L["Stack Items To Bank"]
 		f.stackButtonOld:SetScript("OnEnter", B.Tooltip_Show)
 		f.stackButtonOld:SetScript("OnLeave", B.Tooltip_Hide)
-		f.stackButtonOld:SetScript('OnClick', function()
+		f.stackButtonOld:SetScript("OnClick", function()
 			if IsShiftKeyDown() then
-				B:CommandDecorator(B.Stack, 'bags bank')();
+				B:CommandDecorator(B.Stack, "bags bank")()
 			else
-				B:CommandDecorator(B.Compress, 'bags')();
+				B:CommandDecorator(B.Compress, "bags")()
 			end
 		end)
 
+		--Keyring Button
+		f.keyButtonOld = CreateFrame("Button", nil, f)
+		f.keyButtonOld:Point("RIGHT", f.vendorGraysButtonOld, "LEFT", -3, 0)
+		f.keyButtonOld:Size(55, 10)
+		f.keyButtonOld:SetTemplate("Default", true)
+		f.keyButtonOld:SetBackdropColor(unpack(buttonColor))
+		f.keyButtonOld.ttText = BINDING_NAME_TOGGLEKEYRING
+		f.keyButtonOld:SetScript("OnEnter", self.Tooltip_Show)
+		f.keyButtonOld:SetScript("OnLeave", self.Tooltip_Hide)
+		f.keyButtonOld:SetScript("OnClick", function() ToggleFrame(f.keyFrame) end)
+
 		--Bags Button
-		f.bagsButtonOld = CreateFrame('Button', nil, f)
-		f.bagsButtonOld:Point('RIGHT', f.vendorGraysButtonOld, 'LEFT', -3, 0)
+		f.bagsButtonOld = CreateFrame("Button", nil, f)
+		f.bagsButtonOld:Point("RIGHT", f.keyButtonOld, "LEFT", -3, 0)
 		f.bagsButtonOld:Size(55, 10)
-		f.bagsButtonOld:SetTemplate('Default', true)
+		f.bagsButtonOld:SetTemplate("Default", true)
 		f.bagsButtonOld:SetBackdropColor(unpack(buttonColor))
-		f.bagsButtonOld.ttText = L['Toggle Bags']
+		f.bagsButtonOld.ttText = L["Toggle Bags"]
 		f.bagsButtonOld:SetScript("OnEnter", B.Tooltip_Show)
 		f.bagsButtonOld:SetScript("OnLeave", B.Tooltip_Hide)
-		f.bagsButtonOld:SetScript('OnClick', function() ToggleFrame(f.ContainerHolder) end)
+		f.bagsButtonOld:SetScript("OnClick", function() ToggleFrame(f.ContainerHolder) end)
 	end
 
 	CT:SetBagButtonStylePosition(isBank)
@@ -252,7 +264,7 @@ function CT:SetBagButtonStylePosition(isBank)
 	else
 		f = _G["ElvUI_ContainerFrame"]
 	end
-	if not f then return; end
+	if not f then return end
 
 	if E.db.CustomTweaks.BagButtons.stackButton and E.db.CustomTweaks.BagButtons.style == "ICON" then
 		f.stackButton:Show()
@@ -269,55 +281,61 @@ function CT:SetBagButtonStylePosition(isBank)
 		f.sortButton:Show()
 		f.bagsButton:Show()
 		f.sortButtonOld:Hide()
+		f.keyButtonOld:Hide()
 		f.bagsButtonOld:Hide()
 	else
 		f.sortButton:Hide()
 		f.bagsButton:Hide()
 		f.sortButtonOld:Show()
+		f.keyButtonOld:Show()
 		f.bagsButtonOld:Show()
 	end
 
-	if (isBank) then
+	if isBank then
 		if E.db.CustomTweaks.BagButtons.style == "ICON" then
 			f.purchaseBagButton:Show()
 			f.purchaseBagButtonOld:Hide()
 			if E.db.CustomTweaks.BagButtons.stackButton then
-				f.sortButton:Point('RIGHT', f.stackButton, 'LEFT', -5, 0)
+				f.sortButton:Point("RIGHT", f.stackButton, "LEFT", -5, 0)
 			else
 				f.sortButton:Point("RIGHT", f.bagText, "LEFT", -5, E.Border * 2)
 			end
-			f.editBox:Point('RIGHT', f.purchaseBagButton, 'LEFT', -5, 0);
+			f.editBox:Point("RIGHT", f.purchaseBagButton, "LEFT", -5, 0)
 		else
 			f.purchaseBagButton:Hide()
 			f.purchaseBagButtonOld:Show()
 			if E.db.CustomTweaks.BagButtons.stackButton then
-				f.sortButtonOld:Point('TOP', f, 'TOP', 0, -4)
+				f.sortButtonOld:Point("TOP", f, "TOP", 0, -4)
 			else
 				if f.holderFrame:IsShown() then
-					f.sortButtonOld:Point('TOP', f, 'TOP', 29, -4)
+					f.sortButtonOld:Point("TOP", f, "TOP", 29, -4)
 				end
 			end
-			f.editBox:Point('RIGHT', f.bagText, 'LEFT', -5, 0);
+			f.editBox:Point("RIGHT", f.bagText, "LEFT", -5, 0)
 		end
 	else
 		if E.db.CustomTweaks.BagButtons.style == "ICON" then
 			f.vendorGraysButton:Show()
 			f.vendorGraysButtonOld:Hide()
+
 			if E.db.CustomTweaks.BagButtons.stackButton then
-				f.sortButton:Point('RIGHT', f.stackButton, 'LEFT', -5, 0)
+				f.sortButton:Point("RIGHT", f.stackButton, "LEFT", -5, 0)
 			else
 				f.sortButton:Point("RIGHT", f.goldText, "LEFT", -5, E.Border * 2)
 			end
-			f.editBox:Point('RIGHT', f.vendorGraysButton, 'LEFT', -5, 0);
+
+			f.editBox:Point("RIGHT", f.vendorGraysButton, "LEFT", -5, 0)
 		else
 			f.vendorGraysButton:Hide()
 			f.vendorGraysButtonOld:Show()
+
 			if E.db.CustomTweaks.BagButtons.stackButton then
-				f.vendorGraysButtonOld:Point('TOP', f, 'TOP', -29, -4)
+				f.vendorGraysButtonOld:Point("TOP", f, "TOP", 0, -4)
 			else
-				f.vendorGraysButtonOld:Point('TOP', f, 'TOP', 0, -4)
+				f.vendorGraysButtonOld:Point("TOP", f, "TOP", 30, -4)
 			end
-			f.editBox:Point('RIGHT', f.goldText, 'LEFT', -5, 0);
+
+			f.editBox:Point("RIGHT", f.goldText, "LEFT", -5, 0)
 		end
 	end
 end
@@ -330,7 +348,7 @@ function CT:SetButtonColors(isBank)
 	else
 		f = _G["ElvUI_ContainerFrame"]
 	end
-	if not f then return; end
+	if not f then return end
 
 	f.sortButtonOld.SetBackdropColor = nil
 	f.sortButtonOld:SetBackdropColor(unpack(buttonColor))
@@ -339,6 +357,10 @@ function CT:SetButtonColors(isBank)
 	f.stackButtonOld.SetBackdropColor = nil
 	f.stackButtonOld:SetBackdropColor(unpack(buttonColor))
 	f.stackButtonOld.SetBackdropColor = E.noop
+
+	f.keyButtonOld.SetBackdropColor = nil
+	f.keyButtonOld:SetBackdropColor(unpack(buttonColor))
+	f.keyButtonOld.SetBackdropColor = E.noop
 
 	f.bagsButtonOld.SetBackdropColor = nil
 	f.bagsButtonOld:SetBackdropColor(unpack(buttonColor))
