@@ -281,13 +281,11 @@ function CT:SetBagButtonStylePosition(isBank)
 		f.sortButton:Show()
 		f.bagsButton:Show()
 		f.sortButtonOld:Hide()
-		f.keyButtonOld:Hide()
 		f.bagsButtonOld:Hide()
 	else
 		f.sortButton:Hide()
 		f.bagsButton:Hide()
 		f.sortButtonOld:Show()
-		f.keyButtonOld:Show()
 		f.bagsButtonOld:Show()
 	end
 
@@ -318,6 +316,9 @@ function CT:SetBagButtonStylePosition(isBank)
 			f.vendorGraysButton:Show()
 			f.vendorGraysButtonOld:Hide()
 
+			f.keyButton:Show()
+			f.keyButtonOld:Hide()
+
 			if E.db.CustomTweaks.BagButtons.stackButton then
 				f.sortButton:Point("RIGHT", f.stackButton, "LEFT", -5, 0)
 			else
@@ -328,6 +329,9 @@ function CT:SetBagButtonStylePosition(isBank)
 		else
 			f.vendorGraysButton:Hide()
 			f.vendorGraysButtonOld:Show()
+
+			f.keyButton:Hide()
+			f.keyButtonOld:Show()
 
 			if E.db.CustomTweaks.BagButtons.stackButton then
 				f.vendorGraysButtonOld:Point("TOP", f, "TOP", 0, -4)
@@ -358,10 +362,6 @@ function CT:SetButtonColors(isBank)
 	f.stackButtonOld:SetBackdropColor(unpack(buttonColor))
 	f.stackButtonOld.SetBackdropColor = E.noop
 
-	f.keyButtonOld.SetBackdropColor = nil
-	f.keyButtonOld:SetBackdropColor(unpack(buttonColor))
-	f.keyButtonOld.SetBackdropColor = E.noop
-
 	f.bagsButtonOld.SetBackdropColor = nil
 	f.bagsButtonOld:SetBackdropColor(unpack(buttonColor))
 	f.bagsButtonOld.SetBackdropColor = E.noop
@@ -374,6 +374,10 @@ function CT:SetButtonColors(isBank)
 		f.vendorGraysButtonOld.SetBackdropColor = nil
 		f.vendorGraysButtonOld:SetBackdropColor(unpack(buttonColor))
 		f.vendorGraysButtonOld.SetBackdropColor = E.noop
+
+		f.keyButtonOld.SetBackdropColor = nil
+		f.keyButtonOld:SetBackdropColor(unpack(buttonColor))
+		f.keyButtonOld.SetBackdropColor = E.noop
 	end
 end
 
