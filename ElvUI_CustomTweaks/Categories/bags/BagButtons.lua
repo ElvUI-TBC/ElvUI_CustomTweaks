@@ -354,3 +354,10 @@ function CT:SetButtonColors(isBank)
 		f.vendorGraysButtonOld.SetBackdropColor = E.noop
 	end
 end
+
+local frame = CreateFrame("Frame")
+frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+frame:SetScript("OnEvent", function(self, event)
+	self:UnregisterEvent(event)
+	CT:SetButtonColors()
+end)
