@@ -61,24 +61,10 @@ P["CustomTweaks"]["CastbarText"] = {
 			["yOffset"] = 0,
 			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1}
 		}
-	},
-	["Arena"] = {
-		["duration"] = {
-			["point"] = "RIGHT",
-			["xOffset"] = -4,
-			["yOffset"] = 0,
-			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1}
-		},
-		["text"] = {
-			["point"] = "LEFT",
-			["xOffset"] = 4,
-			["yOffset"] = 0,
-			["color"] = {r = 0.84, g = 0.75, b = 0.65, a = 1}
-		}
 	}
 }
 
-local units = {"Player", "Pet", "Target", "Focus", "Arena"}
+local units = {"Player", "Pet", "Target", "Focus"}
 local anchorValues = {
 	["TOP"] = "TOP",
 	["BOTTOM"] = "BOTTOM",
@@ -208,7 +194,6 @@ local function ConfigTable()
 	options.pet = CreateOptionsGroup(2, L["Pet"], "Pet")
 	options.target = CreateOptionsGroup(3, L["Target"], "Target")
 	options.focus = CreateOptionsGroup(4, L["Focus"], "Focus")
-	options.arena = CreateOptionsGroup(5, L["Arena"], "Arena")
 end
 CT.Configs["CastbarText"] = ConfigTable
 if not isEnabled then return; end
@@ -221,28 +206,14 @@ function PositionCastbarText(unit)
 	local xOffsetDuration = E.db.CustomTweaks.CastbarText[unit].duration.xOffset
 	local yOffsetDuration =	E.db.CustomTweaks.CastbarText[unit].duration.yOffset
 
-	if unit == "Arena" then
-		for i = 1, 5 do
-			local unitframe = _G["ElvUF_Arena"..1]
-			local castbar = unitframe and unitframe.Castbar
+	local unitframe = _G["ElvUF_"..unit]
+	local castbar = unitframe and unitframe.Castbar
 
-			if castbar then
-				castbar.Text:ClearAllPoints()
-				castbar.Text:SetPoint(pointText, castbar, pointText, xOffsetText, yOffsetText)
-				castbar.Time:ClearAllPoints()
-				castbar.Time:SetPoint(pointDuration, castbar, pointDuration, xOffsetDuration, yOffsetDuration)
-			end
-		end
-	else
-		local unitframe = _G["ElvUF_"..unit]
-		local castbar = unitframe and unitframe.Castbar
-
-		if castbar then
-			castbar.Text:ClearAllPoints()
-			castbar.Text:SetPoint(pointText, castbar, pointText, xOffsetText, yOffsetText)
-			castbar.Time:ClearAllPoints()
-			castbar.Time:SetPoint(pointDuration, castbar, pointDuration, xOffsetDuration, yOffsetDuration)
-		end
+	if castbar then
+		castbar.Text:ClearAllPoints()
+		castbar.Text:SetPoint(pointText, castbar, pointText, xOffsetText, yOffsetText)
+		castbar.Time:ClearAllPoints()
+		castbar.Time:SetPoint(pointDuration, castbar, pointDuration, xOffsetDuration, yOffsetDuration)
 	end
 end
 
@@ -250,24 +221,12 @@ function SetCastbarTextColor(unit)
 	local durationColor = E.db.CustomTweaks.CastbarText[unit].duration.color
 	local textColor = E.db.CustomTweaks.CastbarText[unit].text.color
 
-	if unit == "Arena" then
-		for i = 1, 5 do
-			local unitframe = _G["ElvUF_Arena"..i]
-			local castbar = unitframe and unitframe.Castbar
+	local unitframe = _G["ElvUF_"..unit]
+	local castbar = unitframe and unitframe.Castbar
 
-			if castbar then
-				castbar.Text:SetTextColor(textColor.r, textColor.g, textColor.b, textColor.a)
-				castbar.Time:SetTextColor(durationColor.r, durationColor.g, durationColor.b, durationColor.a)
-			end
-		end
-	else
-		local unitframe = _G["ElvUF_"..unit]
-		local castbar = unitframe and unitframe.Castbar
-
-		if castbar then
-			castbar.Text:SetTextColor(textColor.r, textColor.g, textColor.b, textColor.a)
-			castbar.Time:SetTextColor(durationColor.r, durationColor.g, durationColor.b, durationColor.a)
-		end
+	if castbar then
+		castbar.Text:SetTextColor(textColor.r, textColor.g, textColor.b, textColor.a)
+		castbar.Time:SetTextColor(durationColor.r, durationColor.g, durationColor.b, durationColor.a)
 	end
 end
 

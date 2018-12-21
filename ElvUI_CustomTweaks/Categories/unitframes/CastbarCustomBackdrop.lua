@@ -71,12 +71,4 @@ f:SetScript("OnEvent", function(self)
 			hooksecurefunc(castbar, "PostChannelStart", PostCastChannelStart)
 		end
 	end
-
-	for i = 1, 5 do
-		local castbar = _G["ElvUF_Arena"..i].Castbar
-		if castbar then
-			hooksecurefunc(castbar, "PostCastStart", PostCastChannelStart)
-			hooksecurefunc(castbar, "PostChannelStart", PostCastChannelStart)
-		end
-	end
 end)

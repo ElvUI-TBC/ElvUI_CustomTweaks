@@ -34,8 +34,8 @@ local function ConfigTable()
 				name = L["PowerBar Texture"],
 				disabled = function() return not isEnabled end,
 				values = AceGUIWidgetLSMlists.statusbar,
-			},
-		},
+			}
+		}
 	}
 end
 CT.Configs["PowerBarTexture"] = ConfigTable
@@ -47,19 +47,11 @@ function BuildTable()
 	for _, unitName in pairs(UF.units) do
 		local frameNameUnit = E:StringTitle(unitName)
 		frameNameUnit = frameNameUnit:gsub("t(arget)", "T%1")
-		
+
 		local unitframe = _G["ElvUF_"..frameNameUnit]
 		if unitframe and unitframe.Power then powerbars[unitframe.Power] = true end
 	end
-	
-	for unit, unitgroup in pairs(UF.groupunits) do
-		local frameNameUnit = E:StringTitle(unit)
-		frameNameUnit = frameNameUnit:gsub("t(arget)", "T%1")
-		
-		local unitframe = _G["ElvUF_"..frameNameUnit]
-		if unitframe and unitframe.Power then powerbars[unitframe.Power] = true end
-	end
-	
+
 	for _, header in pairs(UF.headers) do
 		for i = 1, header:GetNumChildren() do
 			local group = select(i, header:GetChildren())

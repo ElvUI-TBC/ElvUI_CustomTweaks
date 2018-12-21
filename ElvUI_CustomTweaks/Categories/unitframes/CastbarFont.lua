@@ -55,22 +55,10 @@ P["CustomTweaks"]["CastbarFont"] = {
 			["fontSize"] = 10,
 			["fontOutline"] = "MONOCHROMEOUTLINE"
 		}
-	},
-	["Arena"] = {
-		["duration"] = {
-			["font"] = "Homespun",
-			["fontSize"] = 10,
-			["fontOutline"] = "MONOCHROMEOUTLINE"
-		},
-		["text"] = {
-			["font"] = "Homespun",
-			["fontSize"] = 10,
-			["fontOutline"] = "MONOCHROMEOUTLINE"
-		}
 	}
 }
 
-local units = {"Player", "Pet", "Target", "Focus", "Arena"}
+local units = {"Player", "Pet", "Target", "Focus"}
 local UpdateCastbarFont
 
 local function ConfigTable()
@@ -170,7 +158,6 @@ local function ConfigTable()
 	options.pet = CreateOptionsGroup(2, L["Pet"], "Pet")
 	options.target = CreateOptionsGroup(3, L["Target"], "Target")
 	options.focus = CreateOptionsGroup(4, L["Focus"], "Focus")
-	options.arena = CreateOptionsGroup(5, L["Arena"], "Arena")
 end
 CT.Configs["CastbarFont"] = ConfigTable
 if not isEnabled then return; end
@@ -184,33 +171,16 @@ function UpdateCastbarFont(unit)
 	local fontSize2 = E.db.CustomTweaks.CastbarFont[unit].duration.fontSize
 	local fontOutline2 =	E.db.CustomTweaks.CastbarFont[unit].duration.fontOutline
 
-	if unit == "Arena" then
-		for i = 1, 5 do
-			local unitframe = _G["ElvUF_Arena"..i]
-			local castbar = unitframe and unitframe.Castbar
+	local unitframe = _G["ElvUF_"..unit]
+	local castbar = unitframe and unitframe.Castbar
 
-			if castbar then
-				castbar.Text:FontTemplate(LSM:Fetch("font", font), fontSize, fontOutline)
-				castbar.Time:FontTemplate(LSM:Fetch("font", font2), fontSize2, fontOutline2)
+	if castbar then
+		castbar.Text:FontTemplate(LSM:Fetch("font", font), fontSize, fontOutline)
+		castbar.Time:FontTemplate(LSM:Fetch("font", font2), fontSize2, fontOutline2)
 
-				if onLoad then
-					UF["fontstrings"][castbar.Time] = nil
-					UF["fontstrings"][castbar.Text] = nil
-				end
-			end
-		end
-	else
-		local unitframe = _G["ElvUF_"..unit]
-		local castbar = unitframe and unitframe.Castbar
-
-		if castbar then
-			castbar.Text:FontTemplate(LSM:Fetch("font", font), fontSize, fontOutline)
-			castbar.Time:FontTemplate(LSM:Fetch("font", font2), fontSize2, fontOutline2)
-
-			if onLoad then
-				UF["fontstrings"][castbar.Time] = nil
-				UF["fontstrings"][castbar.Text] = nil
-			end
+		if onLoad then
+			UF["fontstrings"][castbar.Time] = nil
+			UF["fontstrings"][castbar.Text] = nil
 		end
 	end
 end

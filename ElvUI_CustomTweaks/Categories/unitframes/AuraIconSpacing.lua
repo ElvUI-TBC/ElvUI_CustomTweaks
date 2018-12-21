@@ -19,7 +19,6 @@ P["CustomTweaks"]["AuraIconSpacing"] = {
 		["focustarget"] = true,
 		["pet"] = true,
 		["pettarget"] = true,
-		["arena"] = true,
 		["party"] = true,
 		["raid"] = true,
 		["raid40"] = true,
@@ -60,7 +59,6 @@ local function ConfigTable()
 					["focustarget"] = L["FocusTarget"],
 					["pet"] = L["Pet"],
 					["pettarget"] = L["PetTarget"],
-					["arena"] = L["Arena"],
 					["party"] = L["Party"],
 					["raid"] = L["Raid"],
 					["raid40"] = L["Raid40"],
@@ -110,17 +108,6 @@ function UpdateAuraSettings()
 		local unitframe = _G["ElvUF_"..frameNameUnit]
 		if unitframe then
 			SetAuraSpacingAndUpdate(unitframe, unitName, spacing)
-		end
-	end
-
-	for unit, unitgroup in pairs(UF.groupunits) do
-		local spacing = E.db.CustomTweaks.AuraIconSpacing.units[unitgroup] and auraSpacing or E.Spacing
-		local frameNameUnit = E:StringTitle(unit)
-		frameNameUnit = frameNameUnit:gsub("t(arget)", "T%1")
-
-		local unitframe = _G["ElvUF_"..frameNameUnit]
-		if unitframe then
-			SetAuraSpacingAndUpdate(unitframe, unitgroup, spacing)
 		end
 	end
 
